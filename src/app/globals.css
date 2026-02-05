@@ -1,0 +1,336 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@font-face {
+  font-family: 'Outfit';
+  src: url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+}
+
+:root {
+    /* Ultra Dark Gaming Colors */
+    --ng-bg-deep: #000000;
+    --ng-bg-surface: #050508;
+    --ng-bg-elevated: #0a0a0f;
+    --ng-bg-card: rgba(8, 8, 15, 0.85);
+    /* Gaming Neon - Red/Orange Fire */
+    --ng-red: #ff2d55;
+    --ng-pink: #ff0844;
+    --ng-pink-light: #ff6b9d;
+    --ng-orange: #ff6a00;
+    --ng-gradient-brand: linear-gradient(135deg, #ff0844 0%, #ff2d55 50%, #ff6a00 100%);
+    /* Accent colors - Neon Gaming */
+    --ng-purple: #bf00ff;
+    --ng-blue: #00d4ff;
+    --ng-cyan: #00ffff;
+    --ng-green: #00ff88;
+    /* Borders - neon glow hints */
+    --ng-border: rgba(255, 45, 85, 0.15);
+    --ng-border-hover: rgba(255, 45, 85, 0.35);
+    /* Text */
+    --ng-text: #ffffff;
+    --ng-text-muted: #8a8a9a;
+    --ng-text-subtle: #5a5a6a;
+    /* Gaming Gradients */
+    --ng-gradient-pink: linear-gradient(135deg, #ff0844 0%, #ff2d55 100%);
+    --ng-gradient-purple: linear-gradient(135deg, #bf00ff 0%, #7928ca 100%);
+    --ng-gradient-fire: linear-gradient(135deg, #ff0844 0%, #ff6a00 100%);
+    /* Intense Glow effects */
+    --ng-glow-pink: 0 0 100px rgba(255, 8, 68, 0.5);
+    --ng-glow-purple: 0 0 100px rgba(191, 0, 255, 0.4);
+    --ng-glow-cyan: 0 0 80px rgba(0, 255, 255, 0.3);
+
+    --background: #000000;
+    --foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@layer base {
+  body {
+    background-color: #000000;
+    color: var(--ng-text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6, .heading {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+}
+
+/* === GAMING BACKGROUND SYSTEM === */
+
+.ng-noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+.ng-bg-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000000;
+    z-index: -4;
+    overflow: hidden;
+}
+
+.ng-bg-gradient::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+    radial-gradient(ellipse 90% 60% at 50% 10%, rgba(255, 8, 68, 0.25) 0%, transparent 50%), 
+    radial-gradient(ellipse 70% 70% at 90% 80%, rgba(191, 0, 255, 0.2) 0%, transparent 45%), 
+    radial-gradient(ellipse 60% 50% at 10% 60%, rgba(0, 212, 255, 0.15) 0%, transparent 40%), 
+    radial-gradient(ellipse 50% 40% at 85% 5%, rgba(0, 255, 136, 0.1) 0%, transparent 35%), 
+    radial-gradient(ellipse 80% 50% at 50% 95%, rgba(255, 8, 68, 0.18) 0%, transparent 45%);
+    animation: gamingGradientMove 20s ease-in-out infinite;
+    mix-blend-mode: screen;
+}
+
+.ng-bg-gradient::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1000px;
+    height: 1000px;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 8, 68, 0.2) 0%, transparent 35%), radial-gradient(circle at 40% 60%, rgba(191, 0, 255, 0.1) 0%, transparent 45%), radial-gradient(circle at 60% 40%, rgba(0, 212, 255, 0.08) 0%, transparent 50%);
+    filter: blur(100px);
+    pointer-events: none;
+    animation: gamingGlowPulse 6s ease-in-out infinite;
+}
+
+@keyframes gamingGradientMove {
+    0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    25% { transform: translate(2%, 1%) scale(1.02) rotate(0.5deg); }
+    50% { transform: translate(-1%, 2%) scale(1.03) rotate(-0.3deg); }
+    75% { transform: translate(-2%, -1%) scale(1.01) rotate(0.2deg); }
+}
+
+@keyframes gamingGlowPulse {
+    0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+    50% { opacity: 0.6; transform: translateX(-50%) scale(1.15); }
+}
+
+.ng-aurora-waves {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -3;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.ng-aurora-waves::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 180deg at 50% 50%, transparent 0deg, rgba(255, 8, 68, 0.06) 45deg, transparent 90deg, rgba(191, 0, 255, 0.05) 150deg, transparent 200deg, rgba(0, 212, 255, 0.04) 280deg, transparent 360deg);
+    animation: gamingWaveRotate 45s linear infinite;
+    filter: blur(50px);
+}
+
+.ng-aurora-waves::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 300%;
+    height: 200%;
+    background: conic-gradient(from 270deg at 40% 60%, transparent 0deg, rgba(0, 255, 136, 0.03) 60deg, transparent 120deg, rgba(255, 106, 0, 0.04) 200deg, transparent 280deg, rgba(191, 0, 255, 0.03) 340deg, transparent 360deg);
+    animation: gamingWaveRotate 70s linear infinite reverse;
+    filter: blur(70px);
+}
+
+@keyframes gamingWaveRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.ng-floating-orbs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -2;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.ng-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.7;
+    animation: gamingOrbFloat 15s ease-in-out infinite;
+}
+
+.ng-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(255, 8, 68, 0.25) 0%, transparent 60%); top: 5%; left: 15%; animation-delay: 0s; }
+.ng-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(191, 0, 255, 0.2) 0%, transparent 60%); top: 55%; right: 10%; animation-delay: -5s; }
+.ng-orb-3 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(0, 212, 255, 0.18) 0%, transparent 60%); bottom: 15%; left: 5%; animation-delay: -10s; }
+
+@keyframes gamingOrbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    20% { transform: translate(40px, -30px) scale(1.1); }
+    40% { transform: translate(-30px, 40px) scale(0.9); }
+    60% { transform: translate(-50px, -20px) scale(1.05); }
+    80% { transform: translate(30px, 30px) scale(0.95); }
+}
+
+.ng-vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+.ng-top-accent {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 100;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 8, 68, 0.9) 15%, rgba(191, 0, 255, 0.8) 40%, rgba(0, 212, 255, 0.7) 65%, rgba(0, 255, 136, 0.6) 85%, transparent 100%);
+    background-size: 200% 100%;
+    animation: neonAccentShimmer 5s ease-in-out infinite;
+}
+
+@keyframes neonAccentShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.ng-card {
+    @apply bg-[rgba(5,5,12,0.85)] backdrop-blur-2xl border border-[var(--ng-border)] rounded-[1.5rem] relative overflow-hidden transition-all duration-300;
+}
+
+.ng-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 8, 68, 0.8), rgba(191, 0, 255, 0.6), rgba(0, 212, 255, 0.5), transparent);
+    @apply opacity-0 transition-opacity duration-500;
+}
+
+.ng-card:hover {
+    @apply border-[rgba(255,45,85,0.3)] shadow-[0_0_30px_-10px_rgba(255,8,68,0.3),0_8px_32px_-8px_rgba(0,0,0,0.5)];
+}
+
+.ng-card:hover::before {
+    @apply opacity-100;
+}
+
+.ng-btn {
+    @apply relative inline-flex items-center justify-center gap-2 px-7 py-3.5 font-medium text-sm rounded-xl cursor-pointer transition-all duration-200 overflow-hidden;
+}
+
+.ng-btn-primary {
+    @apply bg-gradient-to-br from-[#dd0031] to-[#c3002f] text-white shadow-[0_4px_14px_rgba(221,0,49,0.35),inset_0_1px_0_rgba(255,255,255,0.1)] hover:shadow-[0_6px_20px_rgba(221,0,49,0.4)] hover:brightness-[1.08] active:translate-y-0;
+}
+
+.ng-btn-outline {
+    @apply bg-transparent text-[var(--ng-text-muted)] border border-[var(--ng-border)] rounded-full hover:bg-white/5 hover:text-white hover:border-white/20;
+}
+
+.ng-input {
+    @apply w-full bg-[rgba(21,26,33,0.8)] border border-[var(--ng-border)] rounded-xl px-4 py-3.5 text-[var(--ng-text)] text-sm transition-all duration-200 outline-none focus:border-[rgba(221,0,49,0.5)] focus:bg-[rgba(21,26,33,0.95)] focus:shadow-[0_0_0_3px_rgba(221,0,49,0.1),0_0_20px_rgba(221,0,49,0.1)];
+}
+
+.ng-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium rounded-full bg-white/5 border border-[var(--ng-border)] text-[var(--ng-text-muted)];
+}
+
+.ng-badge-purple { @apply bg-violet-500/15 border-violet-500/30 text-violet-400; }
+.ng-badge-success { @apply bg-emerald-500/15 border-emerald-500/30 text-emerald-400; }
+.ng-badge-warning { @apply bg-amber-500/15 border-amber-500/30 text-amber-400; }
+.ng-badge-danger { @apply bg-rose-500/15 border-rose-500/30 text-rose-400; }
+
+.ng-grid-pattern {
+    position: fixed;
+    inset: 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.ng-gradient-text {
+    @apply bg-gradient-to-r from-[#dd0031] to-[#ff6b9d] bg-clip-text text-transparent;
+}
+
+.ng-section-title {
+    @apply flex items-center gap-3 text-lg md:text-xl font-bold tracking-tight;
+}
+
+.ng-section-icon {
+    @apply w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300;
+}
+
+.ng-card:hover .ng-section-icon {
+    @apply scale-110 rotate-3;
+}
+
+@keyframes shine {
+    100% { transform: translateX(100%) skewX(12deg); }
+}
+
+.animate-shine {
+    animation: shine 2.5s infinite linear;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-[var(--ng-bg-deep)];
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-[rgba(255,45,85,0.2)] rounded-full hover:bg-[rgba(255,45,85,0.4)] transition-colors;
+}
